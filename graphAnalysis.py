@@ -8,6 +8,8 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from scipy.spatial.distance import pdist, squareform
 import networkx as nx
+from networkx.algorithms.community.centrality import girvan_newman
+
 
 #---------importing the dataset & isolating the columns we want to use-----------
 old_df = pd.read_csv("data.csv", usecols=["ReportingCountry", "NumberDosesReceived", "TargetGroup", "Vaccine"])
@@ -64,4 +66,21 @@ mapping = {0: "AT", 1: "BE", 2: "BG", 3:'CY', 4:'CZ', 5:'DE', 6:'DK', 7:'EE', 8:
            23:'PL', 24:'PT', 25:'RO', 26:'SE', 27:'SI', 28:'SK' }
 H = nx.relabel_nodes(G, mapping)
 nx.draw(H, with_labels=True, node_color='pink', edge_color='#6495ED')
+plt.show()
+
+communities = girvan_newman(H)
+node_groups = []
+for com in next(communities):
+    node_groups.append(list(com))
+ 
+print(node_groups)
+ 
+color_map = []
+for node in H:
+    if node in node_groups[0]:
+        color_map.append('blue')
+    else:
+        color_map.append('green')
+plt.title("Communities of EU Countries")
+nx.draw(H, node_color=color_map, with_labels=True)
 plt.show()
