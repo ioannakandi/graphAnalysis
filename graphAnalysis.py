@@ -65,6 +65,7 @@ mapping = {0: "AT", 1: "BE", 2: "BG", 3:'CY', 4:'CZ', 5:'DE', 6:'DK', 7:'EE', 8:
            12:'HR', 13:'HU', 14:'IE', 15:'IS', 16:'IT', 17:'LI', 18:'LT', 19:'LU', 20:'LV', 21:'NL', 22:'NO',
            23:'PL', 24:'PT', 25:'RO', 26:'SE', 27:'SI', 28:'SK' }
 H = nx.relabel_nodes(G, mapping)
+plt.title("Pfizer Vaccination Graph of EU Countries")
 nx.draw(H, with_labels=True, node_color='pink', edge_color='#6495ED')
 plt.show()
 
@@ -78,9 +79,9 @@ print(node_groups)
 color_map = []
 for node in H:
     if node in node_groups[0]:
-        color_map.append('blue')
+        color_map.append('yellow')
     else:
-        color_map.append('green')
+        color_map.append('red')
 plt.title("Communities of EU Countries")
-nx.draw(H, node_color=color_map, with_labels=True)
+nx.draw(H, node_color=color_map,edge_color='#6495ED', with_labels=True)
 plt.show()
